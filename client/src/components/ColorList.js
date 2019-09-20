@@ -12,6 +12,9 @@ const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
+  const [adding, setAdding] = useState(false);
+  const [colorToAdd, setcolorToAdd] = useState(false);
+
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
@@ -33,10 +36,17 @@ const ColorList = ({ colors, updateColors }) => {
       } 
       return color
     }))
+    setEditing(false);
   };
 
-  const deleteColor = color => {
+  const deleteColor = colorToDelete => {
     // make a delete request to delete this color
+    axiosWithAuth()
+    .delete(`/colors/${colorToDelete.id}`)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
+    updateColors(colors.filter(color => color.id != colorToDelete.id))
+    setEditing(false)
   };
 
   return (
@@ -88,8 +98,44 @@ const ColorList = ({ colors, updateColors }) => {
           </div>
         </form>
       )}
-      <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+      {!adding &&(
+        <div className="button-row">
+          <button onClick={() => {setAdding(true)}}>add color</button>
+        </div>
+      )}
+      {adding &&(
+      
+      <form onSubmit={null}>
+          <legend>add color</legend>
+          <label>
+            color name:
+            <input
+              onChange={e =>
+                setColorToEdit({ ...colorToEdit, color: e.target.value })
+              }
+              value={colorToEdit.color}
+            />
+          </label>
+          <label>
+            hex code:
+            <input
+              onChange={e =>
+                setColorToEdit({
+                  ...colorToEdit,
+                  code: { hex: e.target.value }
+                })
+              }
+              value={colorToEdit.code.hex}
+            />
+          </label>
+          <div className="button-row">
+            <button type="submit">add</button>
+            <button onClick={() => setAdding(false)}>cancel</button>
+          </div>
+        </form>
+      )}
+      <div className="spacer" />
     </div>
   );
 };
