@@ -29,10 +29,24 @@ In this project you will create a login page and request a token from the server
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 - [ ] Explain what a token is used for.
+
+A authorization token is something that we get from our backend  so we can render data from the users login.
+It allows us to safely store and render data to a authorized user.
+
 - [ ] What steps can you take in your web apps to keep your data secure?
+
+We can add private routes that can only be rendered by a logged in user.
+
 - [ ] Describe how web servers work.
+
+Web servers store web sites on them and are connected to the inernet. Each site is given a unique url or address so that users can navigate to the site they want.
+
 - [ ] Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
 
+Create => .post()
+Read => .get() or fetch()
+Update => .put()
+Delete => .delete()
 
 ## Project Set Up
 
